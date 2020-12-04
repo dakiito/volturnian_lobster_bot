@@ -12,7 +12,8 @@ module.exports = {
             msg,
             currentPlayer = false, //false = player1 true = player2
             currentColumn,
-            gameOver = false;
+            gameOver = false,
+            spacer = " ​ ​ ​ ​ ​ ​ ​";
 
         const players = {
             false: message.author,
@@ -22,7 +23,8 @@ module.exports = {
         const tiles = {
             empty: ':white_circle:',
             false: '🔵',
-            true: '🔴'
+            true: '🔴',
+            winTile: `🟡`
         }
         const filter = (reaction, user) => {
             return ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣']
@@ -41,9 +43,9 @@ module.exports = {
                 board[i].push(new Array(7)); // Adds array with size of 7 to the empty line:
                 for (var j = 0; j < 7; j++) {
                     board[i][j] = tiles.empty;
-                    boardStr += board[i][j]
+                    boardStr += board[i][j] + spacer
                 }
-                boardStr += "\n" //add line break
+                boardStr += "\n \n" //add line break
             }
             embed.setTitle(`${players[currentPlayer].username}'s turn`)
             embed.setDescription(boardStr)
@@ -93,16 +95,16 @@ module.exports = {
                         waitForReaction() //if game is not over, continue
                     }
                     else {
+                        updateBoard()
                         closeGame()
                     }
                     i = -1 //stop looping if tile has been placed
                 }
                 else if (board[0][currentColumn - 1] != tiles.empty) {
-                    message.reply("row full!")
+                    sendDelete(`${players[currentPlayer]} stop trying to put a tile there, the row is full!`)
                     waitForReaction()
                     i = -1
                 }
-
             }
         }
 
@@ -110,9 +112,9 @@ module.exports = {
             boardStr = "";
             for (var i = 0; i < 6; i++) {
                 for (var j = 0; j < 7; j++) {
-                    boardStr += board[i][j]
+                    boardStr += board[i][j] + spacer
                 }
-                boardStr += "\n" //add line break
+                boardStr += "\n \n" //add line break
             }
             embed.setTitle(`${players[currentPlayer].username}'s turn`)
             embed.setDescription(boardStr)
@@ -120,7 +122,7 @@ module.exports = {
         }
 
         function closeGame() {
-            embed.setTitle(`Game Over, ${players[currentPlayer]} has won`)
+            embed.setTitle(`Game Over, ${players[currentPlayer].username} has won`)
             msg.edit(embed)
         }
 
@@ -138,23 +140,43 @@ module.exports = {
                     if (c + 3 < WIDTH && //check to not go further than the board
                         tile == board[r][c + 1] && // look right
                         tile == board[r][c + 2] &&
-                        tile == board[r][c + 3])
+                        tile == board[r][c + 3]) {
+                        board[r][c] = tiles.winTile
+                        board[r][c + 1] = tiles.winTile
+                        board[r][c + 2] = tiles.winTile
+                        board[r][c + 3] = tiles.winTile
                         win = true
+                    }
                     if (r + 3 < HEIGHT) {
                         if (tile == board[r + 1][c] && // look up
                             tile == board[r + 2][c] &&
-                            tile == board[r + 3][c])
+                            tile == board[r + 3][c]) {
+                            board[r][c] = tiles.winTile
+                            board[r + 1][c] = tiles.winTile
+                            board[r + 2][c] = tiles.winTile
+                            board[r + 3][c] = tiles.winTile
                             win = true
+                        }
                         if (c + 3 < WIDTH &&
                             tile == board[r + 1][c + 1] && // look up & right
                             tile == board[r + 2][c + 2] &&
-                            tile == board[r + 3][c + 3])
+                            tile == board[r + 3][c + 3]) {
+                            board[r][c] = tiles.winTile
+                            board[r + 1][c + 1] = tiles.winTile
+                            board[r + 2][c + 2] = tiles.winTile
+                            board[r + 3][c + 3] = tiles.winTile
                             win = true
+                        }
                         if (c - 3 >= 0 &&
                             tile == board[r + 1][c - 1] && // look up & left
                             tile == board[r + 2][c - 2] &&
-                            tile == board[r + 3][c - 3])
+                            tile == board[r + 3][c - 3]) {
+                            board[r][c] = tiles.winTile
+                            board[r + 1][c - 1] = tiles.winTile
+                            board[r + 2][c - 2] = tiles.winTile
+                            board[r + 3][c - 3]
                             win = true
+                        }
                     }
                 }
             }
@@ -164,6 +186,13 @@ module.exports = {
             //I think this algorithm is less efficent than a check for every direction from where the tile is placed in the case
             // that the board is less than 1/3ds full
             //I really like this algorithm because it can check every win without looking in all 8 directions
+        }
+        async function sendDelete(text) {
+            message.channel.send(text)
+                .then(msg => {
+                    msg.delete({ timeout: 5000 })
+                })
+                .catch(console.error);
         }
 
     }
