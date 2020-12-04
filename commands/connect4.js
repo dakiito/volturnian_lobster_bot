@@ -79,7 +79,7 @@ module.exports = {
                     handleTurn(reaction)
                 })
                 .catch(collected => {
-                    message.reply('you timed out. Game over.');
+                    message.channel.send(`${players[currentPlayer]} timed out. Game over.`);
                     gameOver = true;
                 })
         }
