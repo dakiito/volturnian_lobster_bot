@@ -3,7 +3,7 @@ const Discord = require('discord.js') //need this for embeds
 
 module.exports = {
     name: "test",
-    //args:true,
+    args: true,
     description: "russian roulette game",
     usage: "<@person to verse>",
     async execute(message, args) {
