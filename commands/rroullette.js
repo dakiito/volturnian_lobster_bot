@@ -66,40 +66,47 @@ module.exports = {
             switch (currentAction) {
                 case 1:
                     if (chamber[0])
-                        sendDelete(`${players[currentPlayer]} dodged a bullet by spinning the chamber!`)
+                        sendDelete(`${players[currentPlayer]} dodged a bullet by spinning the barrel!`)
                     else
                         sendDelete(`the bullet was ${chamber.findIndex((b) => b==true)} chambers away`)
 
                     chamber = Array(6) //clear the chamber and get a random bullet
                     chamber[random(0, 6)] = true
                     if (chamber[0]) { //bullet is in the chamber
-                        message.channel.send(`${players[currentPlayer]} has lost.`)
-                        gameOver = true;
+                        message.channel.send(`Pulls the trigger. A gunshot is heard. ${players[currentPlayer]} has lost.`)
+                        closeGame()
                     }
                     else {
                         //*click*
                         sendDelete(`${players[currentPlayer]} pulls the trigger. Everyone hears a *click*.`)
                         chamber[6] = chamber.shift()
+                        rotatePlayers()
+                        updateMessage()
                     }
                     break;
                 case 2:
                     if (chamber[0]) {
-                        sendDelete(`${players[currentPlayer]} has lost. Game over.`)
-                        gameOver = true;
+                        message.channel.send(`Pulls the trigger. A gunshot is heard. ${players[currentPlayer]} has lost.`)
+                        closeGame()
                     }
                     else { //moves the first chamber to the last
                         sendDelete(` ${players[currentPlayer]}pulls the trigger. Everyone hears a *click*.`)
                         chamber[6] = chamber.shift()
+                        rotatePlayers()
+                        updateMessage()
                     }
                     break;
             }
+
+        }
+
+        function rotatePlayers() {
             if (currentPlayer + 1 > maxplayers) { //rotate players
                 currentPlayer = 0
             }
             else {
                 currentPlayer++
             }
-            updateMessage()
         }
 
         function closeGame() {
@@ -109,25 +116,22 @@ module.exports = {
         }
 
         function updateMessage() {
-            if (gameOver) {
-                closeGame()
-            }
-            else {
-                console.log(`current player: ${currentPlayer}`)
-                playerDescription = '' //clear the description
-                for (var i = 0; i < userlist.length + 1; i++) {
-                    if (i == currentPlayer) {
-                        playerDescription += `\n ${players[i]}🔫`
-                    }
-                    else {
-                        playerDescription += `\n ${players[i]}`
-                    }
-                };
-                embed.setFooter(`${players[currentPlayer].username}'s turn`)
-                embed.setDescription(playerDescription)
-                msg.edit(embed)
-                waitForReaction()
-            }
+
+            console.log(`current player: ${currentPlayer}`)
+            playerDescription = '' //clear the description
+            for (var i = 0; i < userlist.length + 1; i++) {
+                if (i == currentPlayer) {
+                    playerDescription += `\n ${players[i]}🔫`
+                }
+                else {
+                    playerDescription += `\n ${players[i]}`
+                }
+            };
+            embed.setFooter(`${players[currentPlayer].username}'s turn`)
+            embed.setDescription(playerDescription)
+            msg.edit(embed)
+            waitForReaction()
+
         }
         async function waitForReaction() {
             await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
