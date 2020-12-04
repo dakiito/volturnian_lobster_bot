@@ -30,10 +30,10 @@ client.on('message', message => {
     const command = args.shift().toLowerCase();
     const commandObj = client.commands.get(command)
     var reply;
-     if (!client.commands.has(command)) { //check whether command exists
-         console.log("command does not exist" + message.author.username)
-     }
-     else if (commandObj.perms && !message.member.hasPermission('ADMINISTRATOR')) {
+    if (!client.commands.has(command)) { //check whether command exists
+        console.log("command does not exist" + message.author.username)
+    }
+    else if (commandObj.perms && !message.member.hasPermission('ADMINISTRATOR')) {
         reply = 'You have insufficent permissions'
     }
     else if (commandObj.args && args.length === 0) {
