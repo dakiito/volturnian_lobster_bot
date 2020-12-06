@@ -12,6 +12,9 @@ const {
 } = require('./config.json');
 client.once('ready', () => {
     console.log('Ready!');
+    client.user.setPresence({ activity: { name: `prefix: ${prefix}` }, status: 'online' })
+        .then(console.log(`activity set, bot is online!`))
+        .catch(console.error);
 });
 
 
