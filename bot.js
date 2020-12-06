@@ -33,7 +33,7 @@ client.on('message', message => {
     if (!client.commands.has(command)) { //check whether command exists
         console.log("command does not exist" + message.author.username)
     }
-    else if (commandObj.perms && !message.member.hasPermission('ADMINISTRATOR')) {
+    else if (commandObj.perms && !message.member.hasPermission(commandObj.permission)) {
         reply = 'You have insufficent permissions'
     }
     else if (commandObj.args && args.length === 0) {

@@ -1,8 +1,9 @@
 module.exports = {
-    name: 'createtrees',
+    name: 'createvcs',
     args: true,
     argsLength: 4,
     perms: true,
+    permission: `MANAGE_CHANNELS`,
     description: 'creates multiple channels that are numbered 0 to amount',
     usage: '<starting number> <amount> <category id> <name of channels>',
     execute(message, args) {
@@ -14,8 +15,6 @@ module.exports = {
 
 
         for (var i = 0; i <= amount; i++) {
-            console.log(i + " iteration")
-
             var number = (startnumber + i);
             server.channels.create(`${name} ${number}`, {
                     type: "voice"

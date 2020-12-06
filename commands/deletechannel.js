@@ -2,6 +2,7 @@ module.exports = {
     name: 'deletechannel',
     args: true,
     perms: true,
+    permission: `MANAGE_CHANNELS`,
     description: 'deletes mentioned channel. usage: deletechannel <#channel> for text channels or id of channel',
     usage: '<#channel> or <channelid>',
     execute(message, args) {

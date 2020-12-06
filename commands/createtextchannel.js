@@ -2,6 +2,7 @@ module.exports = {
     name: 'createtextchannel',
     args: true,
     perms: true,
+    permission:`MANAGE_CHANNELS`,
     description: 'creates a text channel, usage: createtextchannel <name>',
     usage: '<channel name>',
     execute(message, args) {

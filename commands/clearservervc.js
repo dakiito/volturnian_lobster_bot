@@ -2,6 +2,7 @@ module.exports = {
     name: 'clearservervc',
     args: false,
     perms: true,
+    permission: `MANAGE_CHANNELS`,
     description: 'clears a server of any voice chats ',
     usage: '<category ID>',
     execute(message, args) {

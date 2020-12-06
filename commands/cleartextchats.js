@@ -2,8 +2,9 @@ module.exports = {
     name: 'cleartextchats',
     args: true,
     perms: true,
+    permission: `MANAGE_CHANNELS`,
     description: 'clears desired amount of text chats created by the bot. ',
-    usage: '<amount> <chanel topic>',
+    usage: '<amount> <channel topic>',
     execute(message, args) {
         var channelAmount = Number(args[0]);
         var channelTopic = args[1]

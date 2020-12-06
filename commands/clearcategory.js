@@ -2,6 +2,7 @@ module.exports = {
     name: 'clearcategory',
     args: true,
     perms: true,
+    permission: `MANAGE_CHANNELS`,
     description: 'clears a category of any voice chats ',
     usage: '<category ID>',
     execute(message, args) {
