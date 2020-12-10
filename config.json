@@ -1,4 +1,7 @@
 {
-    "token": "NzU4NDY2ODIyOTQ4OTEzMTg3.X2vXRg.lw089Lhq0oCls1mkidFI96YDaIw",
-    "prefix": "l!"
+    "TOKEN": "NzU4NDY2ODIyOTQ4OTEzMTg3.X2vXRg.lw089Lhq0oCls1mkidFI96YDaIw",
+    "PREFIX": "l!",
+    "YOUTUBE_API_KEY": "AIzaSyDDbF3PS5UO_JJxLxgYSxH9-PsaaF9AnpU",
+    "STAY_TIME": 30,
+    "DEFAULT_VOLUME": 20
 }
