@@ -6,6 +6,7 @@ module.exports = {
     args: true,
     description: 'connect 4 game',
     usage: '<@ of person to verse>',
+    aliases: ["c4"],
     async execute(message, args) {
         var board = [],
             boardStr = '',

@@ -36,6 +36,9 @@ for (const file of commandFiles) {
 }
 
 client.on('message', message => {
+    if (message.content.toLowerCase().includes(`trollface`)) {
+        message.reply(`https://tenor.com/view/troll-face-creepy-smile-gif-18297390`)
+    }
     if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
     //debug(message)

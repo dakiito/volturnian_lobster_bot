@@ -10,7 +10,7 @@ module.exports = {
     name: "play",
     cooldown: 3,
     aliases: ["p"],
-    description: "Plays audio from YouTube or Soundcloud",
+    description: "Plays audio from YouTube",
     async execute(message, args) {
         const { channel } = message.member.voice;
 
@@ -21,7 +21,7 @@ module.exports = {
 
         if (!args.length)
             return message
-                .reply(`Usage: ${message.client.prefix}play <YouTube URL | Video Name | Soundcloud URL>`)
+                .reply(`Usage: ${message.client.prefix}play <YouTube URL | Video Name>`)
                 .catch(console.error);
 
         const permissions = channel.permissionsFor(message.client.user);
